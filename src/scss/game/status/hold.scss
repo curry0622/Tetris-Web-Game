@@ -1,8 +1,34 @@
 .status-hold {
   width: 30%;
   height: 100%;
-  border-radius: 20px;
+}
+
+.status-hold-title {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0053a7;
+  font-weight: bold;
+  font-size: 0.7rem;
+}
+
+.status-hold-blocks-container {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
   box-shadow:
     inset 8px 8px 15px rgba(0, 0, 0, 0.13),
     inset -8px -8px 15px rgba(255, 255, 255, 1);
+}
+
+.status-hold-blocks-row {
+  width: 80%;
+  height: 45%;
+  border: red solid 1px;
 }
