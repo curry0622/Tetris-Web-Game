@@ -22,7 +22,7 @@ const Next: React.FC = () => {
 
   return (
     <div className={classNames('status-next')}>
-      <div className={classNames('status-next-title')}>NEXT</div>
+      <div className={classNames('status-next-title')}>N E X T</div>
       <div className={classNames('status-next-blocks-container')}>
         {showBlks}
       </div>

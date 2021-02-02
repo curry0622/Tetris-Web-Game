@@ -22,7 +22,7 @@ const Hold: React.FC = () => {
 
   return (
     <div className={classNames('status-hold')}>
-      <div className={classNames('status-hold-title')}>HOLD</div>
+      <div className={classNames('status-hold-title')}>H O L D</div>
       <div className={classNames('status-hold-blocks-container')}>
         {showBlks}
       </div>
