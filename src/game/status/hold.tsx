@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import classNames from 'classnames';
 
@@ -9,7 +8,7 @@ const Hold: React.FC = () => {
   ];
 
   // show block
-  const showBlks = blksArr.map((row, index) => (
+  const showBlks = blksArr.map((row) => (
     <div className={classNames('status-hold-blocks-row')}>
       {row.map((i) =>
         i ? (
