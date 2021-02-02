@@ -1,8 +1,37 @@
 .status-score {
   width: 30%;
   height: 100%;
-  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-score-title {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0053a7;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.status-score-value-container {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
   box-shadow:
     inset 8px 8px 15px rgba(0, 0, 0, 0.13),
     inset -8px -8px 15px rgba(255, 255, 255, 1);
+}
+
+.status-score-value {
+  color: #004c9a;
+  font-size: 1.5rem;
+  font-weight: bolder;
 }
