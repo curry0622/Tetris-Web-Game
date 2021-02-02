@@ -11,7 +11,13 @@ const Hold: React.FC = () => {
   // show block
   const showBlks = blksArr.map((row, index) => (
     <div className={classNames('status-hold-blocks-row')}>
-      {row.map((i) => (i ? <div>1</div> : <div>0</div>))}
+      {row.map((i) =>
+        i ? (
+          <div className={classNames('status-hold-blocks-filled')} />
+        ) : (
+          <div className={classNames('status-hold-blocks-empty')} />
+        ),
+      )}
     </div>
   ));
 
