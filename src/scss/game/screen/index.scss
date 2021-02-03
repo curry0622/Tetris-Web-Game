@@ -30,13 +30,23 @@
   // border: red solid 1px;
 }
 
-.screen-block {
+.screen-block--filled {
   width: 1.5vw;
   height: 1.5vw;
   color: transparent;
   background-color: #53b1fd;
-  border-radius: 8px;
+  border-radius: 7px;
   box-shadow:
     3px 3px 3px rgba(0, 0, 0, 0.15),
     -4px -4px 3px rgba(255, 255, 255, 1);
+}
+
+.screen-block--empty {
+  width: 1.5vw;
+  height: 1.5vw;
+  font-size: 0.1rem;
+  color: #d8dadf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,13 +1,18 @@
 /* eslint-disable arrow-body-style */
 import React from 'react';
 import classNames from 'classnames';
+import { blocks } from './blocks';
 
 const Screen: React.FC = () => {
-  const showBlks = [...Array(16)].map(() => {
+  const showBlks = blocks.map((row) => {
     return (
       <div className={classNames('screen-row')}>
-        {[...Array(10)].map(() => {
-          return <div className={classNames('screen-block')} />;
+        {row.map((i) => {
+          return i ? (
+            <div className={classNames('screen-block--filled')} />
+          ) : (
+            <div className={classNames('screen-block--empty')}>&#8226;</div>
+          );
         })}
       </div>
     );
