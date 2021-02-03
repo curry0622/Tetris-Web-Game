@@ -1,8 +1,19 @@
+@import './directions.scss';
+@import './drop.scss';
+@import './hold.scss';
+
 .control-container {
   width: 93%;
   height: 20%;
+  display: flex;
   // border-radius: 20px;
   // box-shadow:
   //   inset 8px 8px 15px rgba(0, 0, 0, 0.13),
   //   inset -8px -8px 15px rgba(255, 255, 255, 1);
+}
+
+.control-right-container {
+  width: 50%;
+  height: 100%;
+  border: red solid 1px;
 }
