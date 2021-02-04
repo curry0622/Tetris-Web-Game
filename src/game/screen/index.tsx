@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable arrow-body-style */
 import React from 'react';
 import classNames from 'classnames';
-import { blocks } from './blocks';
 
-const Screen: React.FC = () => {
-  const showBlks = blocks.map((row) => {
+interface IProps {
+  blks: number[][];
+}
+
+const Screen: React.FC<IProps> = ({ blks }) => {
+  const showBlks = blks.map((row) => {
     return (
       <div className={classNames('screen-row')}>
         {row.map((i) => {
