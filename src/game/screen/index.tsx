@@ -12,11 +12,98 @@ const Screen: React.FC<IProps> = ({ blks }) => {
     return (
       <div className={classNames('screen-row')}>
         {row.map((i) => {
-          return i ? (
-            <div className={classNames('screen-block--filled')} />
-          ) : (
-            <div className={classNames('screen-block--empty')}>&#8226;</div>
-          );
+          // return i ? (
+          //   <div className={classNames('screen-block--filled')} />
+          // ) : (
+          //   <div className={classNames('screen-block--empty')}>&#8226;</div>
+          // );
+          switch (i) {
+            default:
+              return (
+                <div className={classNames('screen-block--empty')}>&#8226;</div>
+              );
+            case 0:
+              return (
+                <div className={classNames('screen-block--empty')}>&#8226;</div>
+              );
+            case 1:
+              return (
+                <div
+                  className={classNames(
+                    'screen-block--filled',
+                    'screen-block--red',
+                  )}
+                >
+                  &#8226;
+                </div>
+              );
+            case 2:
+              return (
+                <div
+                  className={classNames(
+                    'screen-block--filled',
+                    'screen-block--orange',
+                  )}
+                >
+                  &#8226;
+                </div>
+              );
+            case 3:
+              return (
+                <div
+                  className={classNames(
+                    'screen-block--filled',
+                    'screen-block--yellow',
+                  )}
+                >
+                  &#8226;
+                </div>
+              );
+            case 4:
+              return (
+                <div
+                  className={classNames(
+                    'screen-block--filled',
+                    'screen-block--green',
+                  )}
+                >
+                  &#8226;
+                </div>
+              );
+            case 5:
+              return (
+                <div
+                  className={classNames(
+                    'screen-block--filled',
+                    'screen-block--blue',
+                  )}
+                >
+                  &#8226;
+                </div>
+              );
+            case 6:
+              return (
+                <div
+                  className={classNames(
+                    'screen-block--filled',
+                    'screen-block--indigo',
+                  )}
+                >
+                  &#8226;
+                </div>
+              );
+            case 7:
+              return (
+                <div
+                  className={classNames(
+                    'screen-block--filled',
+                    'screen-block--purple',
+                  )}
+                >
+                  &#8226;
+                </div>
+              );
+          }
         })}
       </div>
     );

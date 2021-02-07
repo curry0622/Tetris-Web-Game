@@ -1,23 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import Directions from './directions';
 import Hold from './hold';
 import Drop from './drop';
 
-const Control: React.FC = () => {
-  // button class name
-  const [keyName, setKeyName] = useState<string>('');
+interface IProps {
+  keyName: string;
+  setKeyName(keyName: string): void;
+}
 
-  // keyName down event
-  document.addEventListener('keydown', (e) => {
-    setKeyName(e.key.toString());
-  });
-
-  // keyName down event
-  document.addEventListener('keyup', () => {
-    setKeyName('');
-  });
-
+// eslint-disable-next-line arrow-body-style
+const Control: React.FC<IProps> = ({ keyName }) => {
   return (
     <div className={classNames('control-container')}>
       <Directions keyName={keyName} />
