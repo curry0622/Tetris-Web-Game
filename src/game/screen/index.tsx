@@ -12,12 +12,7 @@ const Screen: React.FC<IProps> = ({ blks }) => {
     return (
       <div className={classNames('screen-row')}>
         {row.map((i) => {
-          // return i ? (
-          //   <div className={classNames('screen-block--filled')} />
-          // ) : (
-          //   <div className={classNames('screen-block--empty')}>&#8226;</div>
-          // );
-          switch (i) {
+          switch (Math.abs(i)) {
             default:
               return (
                 <div className={classNames('screen-block--empty')}>&#8226;</div>

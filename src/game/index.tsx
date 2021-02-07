@@ -12,7 +12,9 @@ const Game: React.FC = () => {
 
   // key down event
   document.addEventListener('keydown', (e) => {
-    setKeyName(e.key.toString());
+    setKeyName(e.key);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    // handleBlksChange();
   });
 
   // key down event
@@ -26,14 +28,27 @@ const Game: React.FC = () => {
   // function to determine blocks
   const handleBlksChange = () => {
     setBlks((prev) => {
-      const tmpBlks = [...prev];
-      return tmpBlks;
+      const newBlks = prev
+        .slice()
+        .reverse()
+        .map((row, i) => {
+          const newRow = row.map((el, j) => {
+            if (i < 15 && prev.slice().reverse()[i + 1][j] < 0) {
+              return prev.slice().reverse()[i + 1][j];
+            }
+            if (el < 0) {
+              return 0;
+            }
+            return el;
+          });
+          return [...newRow];
+        });
+      return newBlks.reverse();
     });
   };
 
-  // trigger handleBlksChange each interval
   useEffect(() => {
-    setInterval(handleBlksChange, 500);
+    setInterval(() => handleBlksChange(), 1000);
   }, []);
 
   return (
