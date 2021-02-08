@@ -23,28 +23,6 @@ const Game: React.FC = () => {
   // blocks to display
   const [blks, setBlks] = useState<number[][]>(defaultBlks);
 
-  // function to determine blocks change
-  const handleBlksChange = () => {
-    setBlks((prev) => {
-      const newBlks = prev
-        .slice()
-        .reverse()
-        .map((row, i) => {
-          const newRow = row.map((el, j) => {
-            if (i < 15 && prev.slice().reverse()[i + 1][j] < 0) {
-              return prev.slice().reverse()[i + 1][j];
-            }
-            if (el < 0) {
-              return 0;
-            }
-            return el;
-          });
-          return [...newRow];
-        });
-      return newBlks.reverse();
-    });
-  };
-
   // function to control blocks movement
   const handleBlksMove = (move: string) => {
     setBlks((prev) => {
@@ -70,7 +48,7 @@ const Game: React.FC = () => {
             });
           return newBlks.reverse();
         case 'left':
-          newBlks = prev.slice().map((row, i) => {
+          newBlks = prev.map((row, i) => {
             const newRow = row.map((el, j) => {
               if (j < 10 && row[j + 1] < 0) {
                 return row[j + 1];
@@ -84,14 +62,29 @@ const Game: React.FC = () => {
           });
           return newBlks;
         case 'right':
-          return prev;
+          newBlks = prev.map((row, i) => {
+            const newRow = row
+              .slice()
+              .reverse()
+              .map((el, j) => {
+                if (j < 10 && row.slice().reverse()[j + 1] < 0) {
+                  return row.slice().reverse()[j + 1];
+                }
+                if (el < 0) {
+                  return 0;
+                }
+                return el;
+              });
+            return [...newRow.reverse()];
+          });
+          return newBlks;
       }
     });
   };
 
   // drop blocks each second
   useEffect(() => {
-    setInterval(() => handleBlksMove('left'), 1000);
+    setInterval(() => handleBlksMove('right'), 1000);
   }, []);
 
   return (
