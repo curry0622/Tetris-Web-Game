@@ -54,11 +54,16 @@ const Game: React.FC = () => {
         case 'left':
           newBlks = prev.map((row) => {
             const newRow = row.map((el, j) => {
-              if (j < 10 && row[j + 1] < 0) {
-                return row[j + 1];
+              if ((j === 0 && el < 0) || (el > 0 && j < 10 && row[j + 1] < 0)) {
+                collided = true;
               }
-              if (el < 0) {
-                return 0;
+              if (!collided) {
+                if (j < 10 && row[j + 1] < 0 && el === 0) {
+                  return row[j + 1];
+                }
+                if (el < 0) {
+                  return 0;
+                }
               }
               return el;
             });
