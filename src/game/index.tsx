@@ -13,8 +13,6 @@ const Game: React.FC = () => {
   // key down event
   document.addEventListener('keydown', (e) => {
     setKeyName(e.key);
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    // handleBlksChange();
   });
 
   // key down event
@@ -25,7 +23,7 @@ const Game: React.FC = () => {
   // blocks to display
   const [blks, setBlks] = useState<number[][]>(defaultBlks);
 
-  // function to determine blocks
+  // function to determine blocks change
   const handleBlksChange = () => {
     setBlks((prev) => {
       const newBlks = prev
@@ -47,8 +45,53 @@ const Game: React.FC = () => {
     });
   };
 
+  // function to control blocks movement
+  const handleBlksMove = (move: string) => {
+    setBlks((prev) => {
+      let newBlks;
+      switch (move) {
+        default:
+          return prev;
+        case 'down':
+          newBlks = prev
+            .slice()
+            .reverse()
+            .map((row, i) => {
+              const newRow = row.map((el, j) => {
+                if (i < 15 && prev.slice().reverse()[i + 1][j] < 0) {
+                  return prev.slice().reverse()[i + 1][j];
+                }
+                if (el < 0) {
+                  return 0;
+                }
+                return el;
+              });
+              return [...newRow];
+            });
+          return newBlks.reverse();
+        case 'left':
+          newBlks = prev.slice().map((row, i) => {
+            const newRow = row.map((el, j) => {
+              if (j < 10 && row[j + 1] < 0) {
+                return row[j + 1];
+              }
+              if (el < 0) {
+                return 0;
+              }
+              return el;
+            });
+            return [...newRow];
+          });
+          return newBlks;
+        case 'right':
+          return prev;
+      }
+    });
+  };
+
+  // drop blocks each second
   useEffect(() => {
-    setInterval(() => handleBlksChange(), 1000);
+    setInterval(() => handleBlksMove('left'), 1000);
   }, []);
 
   return (
