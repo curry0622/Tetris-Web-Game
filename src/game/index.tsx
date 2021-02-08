@@ -16,6 +16,9 @@ const Game: React.FC = () => {
   // blocks to display
   const [blks, setBlks] = useState<number[][]>(defaultBlks);
 
+  // should clear rows
+  const [shouldClear, setShouldClear] = useState<boolean>(false);
+
   // should generate new blocks or not
   const [shouldGen, setShouldGen] = useState<boolean>(true);
 
@@ -162,7 +165,7 @@ const Game: React.FC = () => {
                   (i === 0 && el < 0)
                 ) {
                   collided = true;
-                  setShouldGen(true);
+                  setShouldClear(true);
                 }
                 if (!collided) {
                   if (
@@ -252,6 +255,25 @@ const Game: React.FC = () => {
   useEffect(() => {
     setInterval(() => handleBlksMove('down'), 1000);
   }, []);
+
+  // if shouldClear is true, check if there's any row is full
+  useEffect(() => {
+    if (shouldClear) {
+      setBlks((prev) => {
+        const newBlks = prev.slice();
+        prev.forEach((row, i) => {
+          if (row.every((el) => el > 0)) {
+            // newBlks[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            newBlks.splice(i, 1);
+            newBlks.splice(0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+          }
+        });
+        return newBlks;
+      });
+      setShouldClear(false);
+    }
+    setShouldGen(true);
+  }, [shouldClear]);
 
   // if shouldGen is true, generate new tetrimino
   useEffect(() => {
