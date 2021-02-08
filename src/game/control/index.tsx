@@ -7,13 +7,14 @@ import Drop from './drop';
 interface IProps {
   keyName: string;
   setKeyName(keyName: string): void;
+  handleBlksMove(move: string): void;
 }
 
 // eslint-disable-next-line arrow-body-style
-const Control: React.FC<IProps> = ({ keyName }) => {
+const Control: React.FC<IProps> = ({ keyName, handleBlksMove }) => {
   return (
     <div className={classNames('control-container')}>
-      <Directions keyName={keyName} />
+      <Directions keyName={keyName} handleBlksMove={handleBlksMove} />
       <div className={classNames('control-right-container')}>
         <Hold keyName={keyName} />
         <Drop keyName={keyName} />

@@ -3,10 +3,11 @@ import classNames from 'classnames';
 
 interface IProps {
   keyName: string;
+  handleBlksMove(move: string): void;
 }
 
 // eslint-disable-next-line arrow-body-style
-const Directions: React.FC<IProps> = ({ keyName }) => {
+const Directions: React.FC<IProps> = ({ keyName, handleBlksMove }) => {
   return (
     <div className={classNames('control-directions-container')}>
       <div className={classNames('control-directions-top-container')}>
@@ -31,6 +32,7 @@ const Directions: React.FC<IProps> = ({ keyName }) => {
               keyName === 'ArrowLeft' ? 'control-directions-button--active' : ''
             }`,
           )}
+          onClick={() => handleBlksMove('left')}
         >
           &#8592;
         </button>
@@ -42,6 +44,7 @@ const Directions: React.FC<IProps> = ({ keyName }) => {
               keyName === 'ArrowDown' ? 'control-directions-button--active' : ''
             }`,
           )}
+          onClick={() => handleBlksMove('down')}
         >
           &#8595;
         </button>
@@ -55,6 +58,7 @@ const Directions: React.FC<IProps> = ({ keyName }) => {
                 : ''
             }`,
           )}
+          onClick={() => handleBlksMove('right')}
         >
           &#8594;
         </button>

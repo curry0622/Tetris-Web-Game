@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Status from './status';
@@ -10,24 +10,14 @@ const Game: React.FC = () => {
   // state of key
   const [keyName, setKeyName] = useState<string>('');
 
-  // key down event
-  document.addEventListener('keydown', (e) => {
-    setKeyName(e.key);
-  });
-
-  // key down event
-  document.addEventListener('keyup', () => {
-    setKeyName('');
-  });
-
   // blocks to display
   const [blks, setBlks] = useState<number[][]>(defaultBlks);
 
   // function to control blocks movement
-  const handleBlksMove = (move: string) => {
+  const handleBlksMove = (type: string) => {
     setBlks((prev) => {
       let newBlks;
-      switch (move) {
+      switch (type) {
         default:
           return prev;
         case 'down':
@@ -48,7 +38,7 @@ const Game: React.FC = () => {
             });
           return newBlks.reverse();
         case 'left':
-          newBlks = prev.map((row, i) => {
+          newBlks = prev.map((row) => {
             const newRow = row.map((el, j) => {
               if (j < 10 && row[j + 1] < 0) {
                 return row[j + 1];
@@ -62,7 +52,7 @@ const Game: React.FC = () => {
           });
           return newBlks;
         case 'right':
-          newBlks = prev.map((row, i) => {
+          newBlks = prev.map((row) => {
             const newRow = row
               .slice()
               .reverse()
@@ -82,17 +72,45 @@ const Game: React.FC = () => {
     });
   };
 
+  // function to handle key down
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    setKeyName(e.key);
+    switch (e.key) {
+      default:
+        break;
+      case 'ArrowLeft':
+        handleBlksMove('left');
+        break;
+      case 'ArrowRight':
+        handleBlksMove('right');
+        break;
+      case 'ArrowDown':
+        handleBlksMove('down');
+        break;
+    }
+  };
+
   // drop blocks each second
   useEffect(() => {
-    setInterval(() => handleBlksMove('right'), 1000);
+    setInterval(() => handleBlksMove('down'), 1000);
   }, []);
 
   return (
-    <main className={classNames('game-container')}>
+    <main
+      className={classNames('game-container')}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => handleKeyDown(e)}
+      onKeyUp={() => setKeyName('')}
+    >
       <div className={classNames('board-container')}>
         <Status />
         <Screen blks={blks} />
-        <Control keyName={keyName} setKeyName={setKeyName} />
+        <Control
+          keyName={keyName}
+          setKeyName={setKeyName}
+          handleBlksMove={handleBlksMove}
+        />
       </div>
     </main>
   );
