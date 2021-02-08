@@ -1,3 +1,6 @@
+/* eslint-disable no-alert */
+/* eslint-disable arrow-body-style */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
@@ -12,6 +15,133 @@ const Game: React.FC = () => {
 
   // blocks to display
   const [blks, setBlks] = useState<number[][]>(defaultBlks);
+
+  // should generate new blocks or not
+  const [shouldGen, setShouldGen] = useState<boolean>(true);
+
+  // game over or not
+  const [gameOver, setGameOver] = useState<boolean>(false);
+
+  // function to generate random blocks
+  const genNewTet = () => {
+    const tetType = ['I', 'J', 'L', 'S', 'Z', 'T', 'O'];
+    const newTet = tetType[Math.floor(Math.random() * tetType.length)];
+    switch (newTet) {
+      default:
+        break;
+      case 'I':
+        setBlks((prev) => {
+          const newBlks = prev.slice();
+          for (let i = 3; i <= 6; i += 1) {
+            if (prev[0][i] > 0) {
+              setGameOver(true);
+            }
+            newBlks[0][i] = -5;
+          }
+          return newBlks;
+        });
+        break;
+      case 'J':
+        setBlks((prev) => {
+          const newBlks = prev.slice();
+          if (prev[0][4] > 0) {
+            setGameOver(true);
+          } else newBlks[0][4] = -2;
+          for (let i = 4; i <= 6; i += 1) {
+            if (prev[1][i] > 0) {
+              setGameOver(true);
+            } else newBlks[1][i] = -2;
+          }
+          return newBlks;
+        });
+        break;
+      case 'L':
+        setBlks((prev) => {
+          const newBlks = prev.slice();
+          if (prev[0][6] > 0) {
+            setGameOver(true);
+          } else newBlks[0][6] = -6;
+          for (let i = 4; i <= 6; i += 1) {
+            if (prev[1][i] > 0) {
+              setGameOver(true);
+            } else newBlks[1][i] = -6;
+          }
+          return newBlks;
+        });
+        break;
+      case 'S':
+        setBlks((prev) => {
+          const newBlks = prev.slice();
+          if (
+            newBlks[0][5] > 0 ||
+            newBlks[0][6] > 0 ||
+            newBlks[1][4] > 0 ||
+            newBlks[1][5] > 0
+          ) {
+            setGameOver(true);
+          } else {
+            newBlks[0][5] = -1;
+            newBlks[0][6] = -1;
+            newBlks[1][4] = -1;
+            newBlks[1][5] = -1;
+          }
+          return newBlks;
+        });
+        break;
+      case 'Z':
+        setBlks((prev) => {
+          const newBlks = prev.slice();
+          if (
+            newBlks[0][4] > 0 ||
+            newBlks[0][5] > 0 ||
+            newBlks[1][5] > 0 ||
+            newBlks[1][6] > 0
+          ) {
+            setGameOver(true);
+          } else {
+            newBlks[0][4] = -4;
+            newBlks[0][5] = -4;
+            newBlks[1][5] = -4;
+            newBlks[1][6] = -4;
+          }
+          return newBlks;
+        });
+        break;
+      case 'T':
+        setBlks((prev) => {
+          const newBlks = prev.slice();
+          if (prev[0][5] > 0) {
+            setGameOver(true);
+          } else newBlks[0][5] = -7;
+          for (let i = 4; i <= 6; i += 1) {
+            if (prev[1][i] > 0) {
+              setGameOver(true);
+            } else newBlks[1][i] = -7;
+          }
+          return newBlks;
+        });
+        break;
+      case 'O':
+        setBlks((prev) => {
+          const newBlks = prev.slice();
+          if (
+            newBlks[0][4] > 0 ||
+            newBlks[0][5] > 0 ||
+            newBlks[1][4] > 0 ||
+            newBlks[1][5] > 0
+          ) {
+            setGameOver(true);
+          } else {
+            newBlks[0][4] = -3;
+            newBlks[0][5] = -3;
+            newBlks[1][4] = -3;
+            newBlks[1][5] = -3;
+          }
+          return newBlks;
+        });
+        break;
+    }
+  };
 
   // function to control blocks movement
   const handleBlksMove = (type: string) => {
@@ -32,6 +162,7 @@ const Game: React.FC = () => {
                   (i === 0 && el < 0)
                 ) {
                   collided = true;
+                  setShouldGen(true);
                 }
                 if (!collided) {
                   if (
@@ -58,7 +189,7 @@ const Game: React.FC = () => {
                 collided = true;
               }
               if (!collided) {
-                if (j < 10 && row[j + 1] < 0 && el === 0) {
+                if (j < 10 && row[j + 1] < 0 && el <= 0) {
                   return row[j + 1];
                 }
                 if (el < 0) {
@@ -121,6 +252,23 @@ const Game: React.FC = () => {
   useEffect(() => {
     setInterval(() => handleBlksMove('down'), 1000);
   }, []);
+
+  // if shouldGen is true, generate new tetrimino
+  useEffect(() => {
+    if (shouldGen) {
+      genNewTet();
+      setShouldGen(false);
+    }
+  }, [shouldGen]);
+
+  // if game over, reload
+  useEffect(() => {
+    if (gameOver) {
+      setGameOver(false);
+      alert('Game Over');
+      window.location.reload();
+    }
+  }, [gameOver]);
 
   return (
     <main
