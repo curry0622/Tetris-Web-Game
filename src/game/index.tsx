@@ -15,6 +15,7 @@ const Game: React.FC = () => {
 
   // function to control blocks movement
   const handleBlksMove = (type: string) => {
+    let collided = false;
     setBlks((prev) => {
       let newBlks;
       switch (type) {
@@ -26,15 +27,28 @@ const Game: React.FC = () => {
             .reverse()
             .map((row, i) => {
               const newRow = row.map((el, j) => {
-                if (i < 15 && prev.slice().reverse()[i + 1][j] < 0) {
-                  return prev.slice().reverse()[i + 1][j];
+                if (
+                  (i < 15 && el > 0 && prev.slice().reverse()[i + 1][j] < 0) ||
+                  (i === 0 && el < 0)
+                ) {
+                  collided = true;
                 }
-                if (el < 0) {
-                  return 0;
+                if (!collided) {
+                  if (
+                    i < 15 &&
+                    prev.slice().reverse()[i + 1][j] < 0 &&
+                    el <= 0
+                  ) {
+                    return prev.slice().reverse()[i + 1][j];
+                  }
+                  if (el < 0) {
+                    return 0;
+                  }
+                  return el;
                 }
-                return el;
+                return Math.abs(el);
               });
-              return [...newRow];
+              return newRow;
             });
           return newBlks.reverse();
         case 'left':
@@ -48,7 +62,7 @@ const Game: React.FC = () => {
               }
               return el;
             });
-            return [...newRow];
+            return newRow;
           });
           return newBlks;
         case 'right':
@@ -65,7 +79,7 @@ const Game: React.FC = () => {
                 }
                 return el;
               });
-            return [...newRow.reverse()];
+            return newRow.reverse();
           });
           return newBlks;
       }
