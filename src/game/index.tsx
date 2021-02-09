@@ -28,6 +28,7 @@ const Game: React.FC = () => {
   // function to generate random blocks
   const genNewTet = () => {
     const tetType = ['I', 'J', 'L', 'S', 'Z', 'T', 'O'];
+    // random
     const newTet = tetType[Math.floor(Math.random() * tetType.length)];
     switch (newTet) {
       default:
@@ -263,8 +264,9 @@ const Game: React.FC = () => {
         const newBlks = prev.slice();
         prev.forEach((row, i) => {
           if (row.every((el) => el > 0)) {
-            // newBlks[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            // clear row
             newBlks.splice(i, 1);
+            // insert empty row
             newBlks.splice(0, 0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
           }
         });
@@ -275,7 +277,7 @@ const Game: React.FC = () => {
     setShouldGen(true);
   }, [shouldClear]);
 
-  // if shouldGen is true, generate new tetrimino
+  // if shouldGen is true, generate new tetromino
   useEffect(() => {
     if (shouldGen) {
       genNewTet();
